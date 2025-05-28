@@ -10,7 +10,7 @@ export default defineNuxtConfig({
     ],
   },
   css: ['~/assets/css/tailwind.css'],
-  modules: ['shadcn-nuxt'],
+  modules: ['shadcn-nuxt', '@nuxt/icon'],
   shadcn: {
     prefix: '',
     componentDir: './components/ui',

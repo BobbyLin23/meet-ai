@@ -8,8 +8,6 @@ definePageMeta({
   layout: 'auth',
 })
 
-const router = useRouter()
-
 const errorMsg = ref<string | null>(null)
 const pending = ref(false)
 
@@ -36,10 +34,10 @@ const onSubmit = form.handleSubmit((values) => {
     name: values.name,
     email: values.email,
     password: values.password,
+    callbackURL: '/',
   }, {
     onSuccess: () => {
       pending.value = false
-      router.push('/')
     },
     onError: ({ error }) => {
       errorMsg.value = error.message
@@ -47,6 +45,23 @@ const onSubmit = form.handleSubmit((values) => {
     },
   })
 })
+
+function onSocial(provider: 'google' | 'github') {
+  errorMsg.value = null
+  pending.value = true
+  authClient.signIn.social({
+    provider,
+    callbackURL: '/',
+  }, {
+    onSuccess: () => {
+      pending.value = false
+    },
+    onError: ({ error }) => {
+      errorMsg.value = error.message
+      pending.value = false
+    },
+  })
+}
 </script>
 
 <template>
@@ -114,10 +129,12 @@ const onSubmit = form.handleSubmit((values) => {
               </span>
             </div>
             <div class="grid grid-cols-2 gap-4">
-              <Button variant="outline" class="w-full" :disabled="pending">
+              <Button variant="outline" class="w-full" :disabled="pending" @click="() => onSocial('google')">
+                <Icon name="mdi:google" class="size-4 mr-2" />
                 Google
               </Button>
-              <Button variant="outline" class="w-full" :disabled="pending">
+              <Button variant="outline" class="w-full" :disabled="pending" @click="() => onSocial('github')">
+                <Icon name="mdi:github" class="size-4 mr-2" />
                 Github
               </Button>
             </div>
