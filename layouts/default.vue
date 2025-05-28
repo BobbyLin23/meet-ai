@@ -3,7 +3,10 @@
 </script>
 
 <template>
-  <div class="h-screen">
-    <slot />
-  </div>
+  <SidebarProvider>
+    <DashboardSidebar />
+    <main class="size-screen flex flex-col bg-muted">
+      <slot />
+    </main>
+  </SidebarProvider>
 </template>

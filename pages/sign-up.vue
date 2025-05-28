@@ -8,6 +8,8 @@ definePageMeta({
   layout: 'auth',
 })
 
+const router = useRouter()
+
 const errorMsg = ref<string | null>(null)
 const pending = ref(false)
 
@@ -34,10 +36,10 @@ const onSubmit = form.handleSubmit((values) => {
     name: values.name,
     email: values.email,
     password: values.password,
-    callbackURL: '/',
   }, {
     onSuccess: () => {
       pending.value = false
+      router.push('/')
     },
     onError: ({ error }) => {
       errorMsg.value = error.message
@@ -146,7 +148,7 @@ function onSocial(provider: 'google' | 'github') {
             </div>
           </div>
         </form>
-        <div class="bg-radial from-green-700 to-green-900 relative hidden md:flex flex-col gap-y-4 items-center justify-center">
+        <div class="bg-radial from-sidebar-accent to-sidebar relative hidden md:flex flex-col gap-y-4 items-center justify-center">
           <img src="/logo.svg" alt="Logo" class="size-[92px]">
           <p class="text-white text-2xl font-semibold">
             Meet.AI
