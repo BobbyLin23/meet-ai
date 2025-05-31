@@ -15,4 +15,7 @@ export default defineNuxtConfig({
     prefix: '',
     componentDir: './components/ui',
   },
+  build: {
+    transpile: ['trpc-nuxt'],
+  },
 })
