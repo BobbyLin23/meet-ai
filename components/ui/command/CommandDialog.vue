@@ -2,6 +2,7 @@
 import type { DialogRootEmits, DialogRootProps } from 'reka-ui'
 import { useForwardPropsEmits } from 'reka-ui'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog'
+import { useSidebar } from '../sidebar'
 import Command from './Command.vue'
 
 const props = withDefaults(defineProps<DialogRootProps & {
@@ -14,18 +15,39 @@ const props = withDefaults(defineProps<DialogRootProps & {
 const emits = defineEmits<DialogRootEmits>()
 
 const forwarded = useForwardPropsEmits(props, emits)
+
+const { isMobile } = useSidebar()
 </script>
 
 <template>
-  <Dialog v-bind="forwarded">
-    <DialogContent class="overflow-hidden p-0 ">
-      <DialogHeader class="sr-only">
-        <DialogTitle>{{ title }}</DialogTitle>
-        <DialogDescription>{{ description }}</DialogDescription>
-      </DialogHeader>
-      <Command>
-        <slot />
-      </Command>
-    </DialogContent>
-  </Dialog>
+  <template v-if="isMobile">
+    <Drawer v-bind="forwarded">
+      <DrawerContent class="overflow-hidden p-0">
+        <DrawerHeader class="sr-only">
+          <DrawerTitle>
+            {{ title }}
+          </DrawerTitle>
+          <DrawerDescription>
+            {{ description }}
+          </DrawerDescription>
+        </DrawerHeader>
+        <Command>
+          <slot />
+        </Command>
+      </DrawerContent>
+    </Drawer>
+  </template>
+  <template v-else>
+    <Dialog v-bind="forwarded">
+      <DialogContent class="overflow-hidden p-0 ">
+        <DialogHeader class="sr-only">
+          <DialogTitle>{{ title }}</DialogTitle>
+          <DialogDescription>{{ description }}</DialogDescription>
+        </DialogHeader>
+        <Command>
+          <slot />
+        </Command>
+      </DialogContent>
+    </Dialog>
+  </template>
 </template>
