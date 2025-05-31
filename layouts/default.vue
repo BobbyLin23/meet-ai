@@ -5,7 +5,7 @@
 <template>
   <SidebarProvider>
     <DashboardSidebar />
-    <main class="size-screen flex flex-col bg-muted">
+    <main class="w-full flex-1 flex flex-col bg-muted">
       <DashboardNavbar />
       <slot />
     </main>

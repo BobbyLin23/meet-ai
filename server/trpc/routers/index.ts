@@ -1,18 +1,8 @@
-import { z } from 'zod'
-import { baseProcedure, createTRPCRouter } from '~/server/trpc/init'
+import { createTRPCRouter } from '~/server/trpc/init'
+import { agentsRouter } from './agents'
 
 export const appRouter = createTRPCRouter({
-  hello: baseProcedure
-    .input(
-      z.object({
-        text: z.string(),
-      }),
-    )
-    .query((opts) => {
-      return {
-        greeting: `hello ${opts.input.text}`,
-      }
-    }),
+  agents: agentsRouter,
 })
 
 export type AppRouter = typeof appRouter
