@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import { createAvatar } from '@dicebear/core'
+import type { HTMLAttributes } from 'vue'
 import { botttsNeutral, initials } from '@dicebear/collection'
-import type { HTMLAttributes } from 'vue';
+import { createAvatar } from '@dicebear/core'
 
 const props = defineProps<{
   seed: string

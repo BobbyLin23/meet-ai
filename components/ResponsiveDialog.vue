@@ -4,15 +4,14 @@ import { useSidebar } from './ui/sidebar'
 defineProps<{
   title: string
   description: string
-  open: boolean
 }>()
-
+const open = defineModel<boolean>()
 const { isMobile } = useSidebar()
 </script>
 
 <template>
   <template v-if="isMobile">
-    <Drawer :open="open">
+    <Drawer v-model:open="open">
       <DrawerContent>
         <DrawerHeader>
           <DrawerTitle>
@@ -29,7 +28,7 @@ const { isMobile } = useSidebar()
     </Drawer>
   </template>
   <template v-else>
-    <Dialog :open="open">
+    <Dialog v-model:open="open" @update:open="open = $event">
       <DialogContent>
         <DialogHeader>
           <DialogTitle>
@@ -39,10 +38,10 @@ const { isMobile } = useSidebar()
             {{ description }}
           </DialogDescription>
         </DialogHeader>
+        <div>
+          <slot />
+        </div>
       </DialogContent>
-      <div class="p-4">
-        <slot />
-      </div>
     </Dialog>
   </template>
 </template>
